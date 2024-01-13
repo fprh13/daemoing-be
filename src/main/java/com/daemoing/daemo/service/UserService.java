@@ -13,7 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+
+import java.util.Optional;
 
 import static com.daemoing.daemo.service.dto.UserDto.*;
 
@@ -27,7 +28,9 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
 
-    /**아이디 중복 확인**/
+    /**
+     * 아이디 중복 확인
+     **/
     public boolean checkLoginIdDuplicate(String loginId) {
         return userRepository.existsByLoginId(loginId);
     }
@@ -37,18 +40,15 @@ public class UserService {
      */
     @Transactional
     public Long join(JoinDto joinDto) {
-        User user = userRepository.save(User.builder()
-                .loginId(joinDto.getLoginId())
-                .password(passwordEncoder.encode(joinDto.getPassword()))
-                .username(joinDto.getUsername())
-                .description(joinDto.getDescription())
-                .email(joinDto.getEmail())
-                .studentId(joinDto.getStudentId())
-                .gender(Gender.valueOf(joinDto.getGender()))
-                .univ(joinDto.getUniv())
-                .role(Role.USER)
-                .build());
-        log.info(joinDto.getLoginId() + " : " + "join" + "(" + new Date() + ")");
+        User user = userRepository.save(new User(joinDto.getLoginId(),
+                passwordEncoder.encode(joinDto.getPassword()),
+                joinDto.getUsername(),
+                joinDto.getDescription(),
+                joinDto.getEmail(),
+                joinDto.getStudentId(),
+                Gender.valueOf(joinDto.getGender()),
+                joinDto.getUniv(),
+                Role.USER));
         return user.getId();
     }
 
@@ -70,39 +70,35 @@ public class UserService {
     }
 
 
-
     /**
      * READ - ME
      */
     public InfoDto info() {
         User user = userRepository.findMyInfoByLoginId(SecurityContextHolder.getContext().getAuthentication().getName());
-        return InfoDto.builder()
-                .loginId(user.getLoginId())
-                .username(user.getUsername())
-                .description(user.getDescription())
-                .email(user.getEmail())
-                .studentId(user.getStudentId())
-                .gender(user.getGender().toString())
-                .univ(user.getUniv())
-                .build();
+        return new InfoDto(user.getLoginId(),
+                user.getUsername(),
+                user.getDescription(),
+                user.getEmail(),
+                user.getStudentId(),
+                user.getGender().toString(),
+                user.getUniv());
     }
 
     /**
      * READ - OTHERS
      */
     public InfoDto othersInfo(String loginId) {
-        User othersUser = userRepository.findByLoginId(loginId).orElseThrow(
-                ()->new CustomException(ErrorCode.USER_NOT_FOUND)
+        User user = userRepository.findByLoginId(loginId).orElseThrow(
+                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
         );
-        return InfoDto.builder()
-                .loginId(othersUser.getLoginId())
-                .username(othersUser.getUsername())
-                .description(othersUser.getDescription())
-                .email(othersUser.getEmail())
-                .studentId(othersUser.getStudentId())
-                .gender(othersUser.getGender().toString())
-                .univ(othersUser.getUniv())
-                .build();
+        return new InfoDto(user.getLoginId(),
+                user.getUsername(),
+                user.getDescription(),
+                user.getEmail(),
+                user.getStudentId(),
+                user.getGender().toString(),
+                user.getUniv());
     }
-    }
+
+}
 

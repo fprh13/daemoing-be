@@ -33,15 +33,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (accessToken != null && jwtTokenProvider.validateAccessToken(accessToken)) {
                 Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                log.debug("Save authentication in SecurityContextHolder.");
+                log.debug("authentication를 SecurityContextHolder에 저장했습니다.");
             }
         } catch (IncorrectClaimException e) { // 잘못된 토큰일 경우
             SecurityContextHolder.clearContext();
-            log.debug("Invalid JWT token.");
+            log.debug("잘못된 토큰 입니다.");
             response.sendError(403);
         } catch (UsernameNotFoundException e) { // 회원을 찾을 수 없을 경우
             SecurityContextHolder.clearContext();
-            log.debug("Can't find user.");
+            log.debug("회원을 찾을 수 없습니다..");
             response.sendError(403);
         }
 

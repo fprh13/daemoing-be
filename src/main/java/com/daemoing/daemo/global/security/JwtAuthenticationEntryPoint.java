@@ -32,7 +32,5 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().write(objectMapper.writeValueAsString(
                 ResponseDto.fail(HttpStatus.UNAUTHORIZED,"잘못된 접근 입니다.")));
-        // 기존 방식
-//        response.sendError(401, "잘못된 접근입니다.");
     }
 }

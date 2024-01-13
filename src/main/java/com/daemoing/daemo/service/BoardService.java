@@ -34,11 +34,7 @@ public class BoardService {
         User user = userRepository.findByLoginId(
                         SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        return boardRepository.save(Board.builder()
-                .title(writeDto.getTitle())
-                .content(writeDto.getContent())
-                .user(user)
-                .build()).getId();
+        return boardRepository.save(new Board(writeDto.getTitle(),writeDto.getContent(),user)).getId();
     }
 
     /**
@@ -78,14 +74,13 @@ public class BoardService {
 
         board.increaseView(board.getViewCount());
 
-        return DetailDto.builder()
-                .createBy(board.getCreateBy())
-                .title(board.getTitle())
-                .content(board.getContent())
-                .viewCount(board.getViewCount())
-                .createDate(board.getCreateDate())
-                .lastModifiedDate(board.getLastModifiedDate())
-                .build();
+        return new DetailDto(board.getCreateBy(),
+                board.getModifyBy(),
+                board.getTitle(),
+                board.getContent(),
+                board.getViewCount(),
+                board.getCreateDate(),
+                board.getLastModifiedDate());
     }
 
     /**
@@ -94,12 +89,12 @@ public class BoardService {
     public Page<PageDto> page(int id) {
         Page<Board> page = boardRepository
                 .findPageBy(PageRequest.of(id, 10, Sort.by(Sort.Direction.DESC,"createDate")));
-        return page.map(board -> PageDto.builder()
-                .createBy(board.getCreateBy())
-                .title(board.getTitle())
-                .viewCount(board.getViewCount())
-                .createDate(board.getCreateDate())
-                .lastModifiedDate(board.getLastModifiedDate())
-                .build());
+        return page.map(board -> new PageDto(
+                board.getCreateBy(),
+                board.getModifyBy(),
+                board.getTitle(),
+                board.getViewCount(),
+                board.getCreateDate(),
+                board.getLastModifiedDate()));
     }
 }
