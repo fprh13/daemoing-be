@@ -1,7 +1,6 @@
 package com.daemoing.daemo.service.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,7 +11,6 @@ public class BoardDto {
      * create
      */
     @Data
-    @Builder
     @AllArgsConstructor
     public static class WriteDto {
         private String title;
@@ -23,7 +21,6 @@ public class BoardDto {
      * update
      */
     @Data
-    @Builder
     @AllArgsConstructor
     public static class UpdateDto {
         private String title;
@@ -34,10 +31,10 @@ public class BoardDto {
      * read one
      */
     @Data
-    @Builder
     @AllArgsConstructor
     public static class DetailDto {
         private String createBy;
+        private String modifyBy;
         private String title;
         private String content;
         private int viewCount;
@@ -50,10 +47,10 @@ public class BoardDto {
      * read
      */
     @Data
-    @Builder
     @AllArgsConstructor
     public static class PageDto {
         private String createBy;
+        private String modifyBy;
         private String title;
         private int viewCount;
         private LocalDateTime createDate;

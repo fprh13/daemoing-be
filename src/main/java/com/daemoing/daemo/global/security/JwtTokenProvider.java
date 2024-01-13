@@ -88,7 +88,7 @@ public class JwtTokenProvider implements InitializingBean {
     }
 
 
-    // == 토큰으로부터 정보 추출 == //
+    //==토큰으로부터 정보 추출==//
 
     public Claims getClaims(String token) {
         try {
@@ -113,15 +113,9 @@ public class JwtTokenProvider implements InitializingBean {
     }
 
 
-    // == 토큰 검증 == //
-
+    //==토큰 검증==//
     public boolean validateRefreshToken(String refreshToken){
         try {
-//             탈퇴는 키 값 모두 삭제 처리 -> 그냥 토큰 삭제로 진행
-//            if (redisService.getValues(refreshToken).equals("delete")) { // 회원 탈퇴했을 경우
-//                throw new CustomException(ErrorCode.INVALID_AUTH_TOKEN);
-//                return false;
-//            }
             Jwts.parserBuilder()
                     .setSigningKey(signingKey)
                     .build()

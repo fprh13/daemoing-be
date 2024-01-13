@@ -25,7 +25,7 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity // Spring Security 설정 클래스
-@EnableGlobalMethodSecurity(securedEnabled = true)
+//@EnableGlobalMethodSecurity(securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -63,11 +63,13 @@ public class SecurityConfig {
                 .authorizeRequests((authorizeRequests) ->
                         authorizeRequests
                                 .requestMatchers("/users/mypage/**").authenticated()
+                                .requestMatchers("/clubs/**").authenticated()
                                 .requestMatchers("/admin/**").hasRole("ADMIN"))
                 // 예외 처리
                 .exceptionHandling((exceptionHandling) ->
-                        exceptionHandling.authenticationEntryPoint(jwtAuthenticationEntryPoint) //customEntryPoint
-                                .accessDeniedHandler(jwtAccessDeniedHandler) // cutomAccessDeniedHandler
+                        exceptionHandling
+                                .authenticationEntryPoint(jwtAuthenticationEntryPoint) //customEntryPoint
+                                .accessDeniedHandler(jwtAccessDeniedHandler) // customAccessDeniedHandler
                 );
         return http.build();
     }

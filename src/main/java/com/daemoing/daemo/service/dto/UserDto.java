@@ -4,7 +4,6 @@ import com.daemoing.daemo.domain.Univ;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 
 
@@ -16,7 +15,6 @@ public class UserDto {
      * CREATE
      */
     @Data
-    @Builder
     @AllArgsConstructor
     public static class JoinDto {
 
@@ -58,7 +56,6 @@ public class UserDto {
      * UPDATE
      */
     @Data
-    @Builder
     @AllArgsConstructor
     public static class UpdateDto {
         @NotBlank(message = "아이디가 입력되지 않았습니다.")
@@ -95,7 +92,6 @@ public class UserDto {
      * 3. 다른 회원 정보 조회
      */
     @Data
-    @Builder
     @AllArgsConstructor
     public static class InfoDto {
         private String loginId;

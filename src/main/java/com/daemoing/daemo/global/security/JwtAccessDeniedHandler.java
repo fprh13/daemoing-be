@@ -32,6 +32,5 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 
         response.getWriter().write(objectMapper.writeValueAsString(
                 ResponseDto.fail(HttpStatus.UNAUTHORIZED, "권한이 없습니다")));
-//        response.sendError(403, "권한이 없습니다.");
     }
 }

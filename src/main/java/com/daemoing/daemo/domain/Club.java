@@ -4,21 +4,24 @@ package com.daemoing.daemo.domain;
 import com.daemoing.daemo.global.auditing.BaseCreateByEntity;
 import com.daemoing.daemo.global.common.ErrorCode;
 import com.daemoing.daemo.global.common.exception.CustomException;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import static jakarta.persistence.CascadeType.ALL;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "club")
-@Builder
-@AllArgsConstructor
 @Getter
 public class Club extends BaseCreateByEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "club_id")
     private Long id;
 
@@ -44,10 +47,32 @@ public class Club extends BaseCreateByEntity {
     @Embedded
     private Univ univ; // 모임 대학 정보
 
-    // TODO: 모임 썸 내일 관련 정보
-    // TODO: 카테고리 관련 정보
-    // TODO: 연관관계 관련 정보 (신청 방식이라면 MM관계 로 풀고 isApproval 값 넣는 것 고려)
-    // TODO: 실시간 채팅 일 경우 신청 방식 X applicant, openChatAddress 삭제
+    @OneToMany(mappedBy = "club", cascade = ALL)
+    private List<UserClub> userClubs = new ArrayList<>(); // userClub
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    public Club(String name,
+                String description,
+                String openChatAddress,
+                LocalDateTime activeDate,
+                boolean isOnline,
+                int participantMax,
+                Univ univ,
+                Category category) {
+        this.name = name;
+        this.description = description;
+        this.openChatAddress = openChatAddress;
+        this.activeDate = activeDate;
+        this.isOnline = isOnline;
+        this.participantMax = participantMax;
+        this.univ = univ;
+        this.category = category;
+        category.getClubs().add(this);//연관관계 N
+    }
 
     //== 업데이트 로직 ==//
     public void update(String name,
@@ -76,12 +101,17 @@ public class Club extends BaseCreateByEntity {
         this.applicantCount = applicantCount + 1;
     }
 
-    //== 비지니스 로직==//
+    //== 최대 참가수 검증==//
     public void overValidation() {
         if (this.participantCount < this.participantMax) {
             this.participantCount = participantCount + 1; // 참가 확정 + 1
         } else {
             throw new CustomException(ErrorCode.OVER_VALIDATION);
         }
+    }
+
+    //==그룹 신청==//
+    public void apply(UserClub userClub) {
+        getUserClubs().add(userClub);
     }
 }

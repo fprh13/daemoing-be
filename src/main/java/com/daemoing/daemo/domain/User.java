@@ -15,13 +15,11 @@ import static jakarta.persistence.CascadeType.ALL;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user")
-@Builder
-@AllArgsConstructor
 @Getter
 public class User extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
@@ -47,9 +45,23 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role; // 사용자 권한
 
+    @OneToMany(mappedBy = "user", cascade = ALL)
+    private List<Board> boards = new ArrayList<>(); //board
 
     @OneToMany(mappedBy = "user", cascade = ALL)
-    private List<Board> boards = new ArrayList<>();
+    private List<UserClub> userClubs = new ArrayList<>(); // userClub
+
+    public User(String loginId, String password, String username, String description, String email, int studentId, Gender gender, Univ univ, Role role) {
+        this.loginId = loginId;
+        this.password = password;
+        this.username = username;
+        this.description = description;
+        this.email = email;
+        this.studentId = studentId;
+        this.gender = gender;
+        this.univ = univ;
+        this.role = role;
+    }
 
     //==변경 로직==//
     public void update(String loginId, String username, String description ,String email, int studentId ,Gender gender,Univ univ) {
