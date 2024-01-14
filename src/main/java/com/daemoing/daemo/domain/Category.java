@@ -20,12 +20,20 @@ public class Category {
     private Long id;
 
     private String parentCategory;
+
     private String childCategory;
 
     @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
     private List<Club> clubs = new ArrayList<>();
 
+
     public Category(String parentCategory, String childCategory) {
+        this.parentCategory = parentCategory;
+        this.childCategory = childCategory;
+    }
+
+    //==업데이트==//
+    public void update(String parentCategory, String childCategory) {
         this.parentCategory = parentCategory;
         this.childCategory = childCategory;
     }

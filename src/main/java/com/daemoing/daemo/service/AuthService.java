@@ -1,6 +1,6 @@
 package com.daemoing.daemo.service;
 
-import com.daemoing.daemo.service.dto.AuthDto;
+import com.daemoing.daemo.dto.AuthDto;
 import com.daemoing.daemo.global.security.JwtTokenProvider;
 import com.daemoing.daemo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.daemoing.daemo.global.common.ErrorCode.*;
-import static com.daemoing.daemo.service.dto.ClubDto.*;
+import static com.daemoing.daemo.dto.ClubDto.*;
 
 @Slf4j
 @Service
@@ -89,8 +89,10 @@ public class ClubService {
     /**
      * read one
      */
+    @Transactional
     public DetailDto detail(Long id) {
         Club club = clubRepository.findById(id).orElseThrow(() -> new CustomException(RESOURCE_NOT_FOUND));
+        club.increaseView(club.getViewCount());
         return new DetailDto(
                 club.getName(),
                 club.getDescription(),
@@ -111,6 +113,7 @@ public class ClubService {
         Club club = clubRepository.findById(id).orElseThrow(() -> new CustomException(RESOURCE_NOT_FOUND));
         ClubValidator.checkDuplicateApplicant(user,club);
         club.apply(new UserClub(userDetails.getUsername(),ClubAccessState.WAITING,user,club));
+        club.increaseApplicant(club.getApplicantCount());
         return club.getId();
     }
 
@@ -126,6 +129,7 @@ public class ClubService {
                 .orElseThrow(() -> new CustomException(RESOURCE_NOT_FOUND));
         if (management.equals("approval")) {
             applicantUserClub.update(ClubAccessState.ACCEPTED);
+            userClub.getClub().overValidation(userClub.getClub().getParticipantCount());
             return userClub.getClub().getId();
         }
         if (management.equals("rejection")) {
@@ -143,7 +147,7 @@ public class ClubService {
                 .orElseThrow(() -> new CustomException(ACCESS_DENIED));
         ClubValidator.checkLeader(userClub);
         Page<UserClub> applicantListPage = userClubRepository.findApplicantPageByClubId(
-                id, PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "createDate")));//레이지 초기화
+                id, PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "createDate")));
         return applicantListPage.map(ApplicantListDto::new);
     }
 }

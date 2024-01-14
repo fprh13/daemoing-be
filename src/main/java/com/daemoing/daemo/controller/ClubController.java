@@ -2,7 +2,7 @@ package com.daemoing.daemo.controller;
 
 import com.daemoing.daemo.controller.response.ResponseDto;
 import com.daemoing.daemo.service.ClubService;
-import com.daemoing.daemo.service.dto.ClubDto.UpdateDto;
+import com.daemoing.daemo.dto.ClubDto.UpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import static com.daemoing.daemo.service.dto.ClubDto.SaveDto;
+import static com.daemoing.daemo.dto.ClubDto.SaveDto;
 import static org.springframework.http.HttpStatus.*;
 
 @Slf4j

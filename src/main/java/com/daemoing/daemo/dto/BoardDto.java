@@ -1,4 +1,4 @@
-package com.daemoing.daemo.service.dto;
+package com.daemoing.daemo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -97,12 +97,12 @@ public class Club extends BaseCreateByEntity {
     }
 
     //== 신청자 수 증가 ==//
-    public void increaseApplicant() {
+    public void increaseApplicant(int applicantCount) {
         this.applicantCount = applicantCount + 1;
     }
 
     //== 최대 참가수 검증==//
-    public void overValidation() {
+    public void overValidation(int participantCount) {
         if (this.participantCount < this.participantMax) {
             this.participantCount = participantCount + 1; // 참가 확정 + 1
         } else {

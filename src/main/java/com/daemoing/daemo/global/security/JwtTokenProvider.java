@@ -3,7 +3,7 @@ package com.daemoing.daemo.global.security;
 
 
 import com.daemoing.daemo.service.RedisService;
-import com.daemoing.daemo.service.dto.AuthDto;
+import com.daemoing.daemo.dto.AuthDto;
 import com.daemoing.daemo.global.common.ErrorCode;
 import com.daemoing.daemo.global.common.exception.CustomException;
 import io.jsonwebtoken.*;
