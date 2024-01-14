@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
-import static com.daemoing.daemo.service.dto.AuthDto.LoginDto;
-import static com.daemoing.daemo.service.dto.AuthDto.TokenDto;
+import static com.daemoing.daemo.dto.AuthDto.LoginDto;
+import static com.daemoing.daemo.dto.AuthDto.TokenDto;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 

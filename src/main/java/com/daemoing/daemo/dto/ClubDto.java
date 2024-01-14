@@ -1,4 +1,4 @@
-package com.daemoing.daemo.service.dto;
+package com.daemoing.daemo.dto;
 
 import com.daemoing.daemo.domain.Univ;
 import com.daemoing.daemo.domain.UserClub;

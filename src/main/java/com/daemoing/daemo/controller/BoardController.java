@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.daemoing.daemo.service.dto.BoardDto.UpdateDto;
-import static com.daemoing.daemo.service.dto.BoardDto.WriteDto;
+import static com.daemoing.daemo.dto.BoardDto.UpdateDto;
+import static com.daemoing.daemo.dto.BoardDto.WriteDto;
 import static org.springframework.http.HttpStatus.OK;
 
 @Slf4j

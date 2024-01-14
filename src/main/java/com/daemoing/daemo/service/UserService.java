@@ -14,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.Optional;
-
-import static com.daemoing.daemo.service.dto.UserDto.*;
+import static com.daemoing.daemo.dto.UserDto.*;
 
 
 @Slf4j

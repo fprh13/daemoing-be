@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
-import static com.daemoing.daemo.service.dto.UserDto.JoinDto;
-import static com.daemoing.daemo.service.dto.UserDto.UpdateDto;
+import static com.daemoing.daemo.dto.UserDto.JoinDto;
+import static com.daemoing.daemo.dto.UserDto.UpdateDto;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
