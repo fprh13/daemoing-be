@@ -61,8 +61,7 @@ public class Club extends BaseCreateByEntity {
                 LocalDateTime activeDate,
                 boolean isOnline,
                 int participantMax,
-                Univ univ,
-                Category category) {
+                Univ univ) {
         this.name = name;
         this.description = description;
         this.openChatAddress = openChatAddress;
@@ -70,18 +69,16 @@ public class Club extends BaseCreateByEntity {
         this.isOnline = isOnline;
         this.participantMax = participantMax;
         this.univ = univ;
+    }
+
+    //==연관관계 메서드==//
+    public void setCategory(Category category) {
         this.category = category;
         category.getClubs().add(this);//연관관계 N
     }
 
     //== 업데이트 로직 ==//
-    public void update(String name,
-                       String description,
-                       String openChatAddress,
-                       boolean isOnline,
-                       LocalDateTime activeDate,
-                       int participantMax,
-                       Univ univ) {
+    public void update(String name, String description, String openChatAddress, boolean isOnline, LocalDateTime activeDate, int participantMax, Univ univ) {
         this.name = name;
         this.description = description;
         this.openChatAddress = openChatAddress;
@@ -108,10 +105,5 @@ public class Club extends BaseCreateByEntity {
         } else {
             throw new CustomException(ErrorCode.OVER_VALIDATION);
         }
-    }
-
-    //==그룹 신청==//
-    public void apply(UserClub userClub) {
-        getUserClubs().add(userClub);
     }
 }

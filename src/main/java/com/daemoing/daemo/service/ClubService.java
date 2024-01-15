@@ -3,11 +3,13 @@ package com.daemoing.daemo.service;
 
 import com.daemoing.daemo.domain.*;
 import com.daemoing.daemo.domain.type.ClubAccessState;
+import com.daemoing.daemo.dto.CategoryDto;
 import com.daemoing.daemo.global.common.exception.CustomException;
 import com.daemoing.daemo.repository.CategoryRepository;
 import com.daemoing.daemo.repository.UserClubRepository;
 import com.daemoing.daemo.repository.UserRepository;
 import com.daemoing.daemo.repository.ClubRepository;
+import com.daemoing.daemo.repository.custom.CategoryRepositoryCustom;
 import com.daemoing.daemo.service.validator.ClubValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ public class ClubService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final UserClubRepository userClubRepository;
+    private final CategoryRepositoryCustom categoryRepositoryCustom;
 
 
     /**
@@ -39,20 +42,23 @@ public class ClubService {
     @Transactional
     public Long save(SaveDto saveDto, UserDetails userDetails) {
         User user = userRepository.findByLoginId(userDetails.getUsername()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        // TODO : 카테고리를 검색해서 지정 할지 말고 선택
-        Category category = categoryRepository.save(new Category(
-                saveDto.getParentCategory(),
-                saveDto.getChildCategory()));
-        Club club = clubRepository.save(new Club(
-                saveDto.getName(),
+        Category category = categoryRepository.findCategoryByParentCategoryAndChildCategory(saveDto.getParentCategory(), saveDto.getChildCategory())
+                .orElseThrow(() -> new CustomException(RESOURCE_NOT_FOUND));
+        Club club= new Club(saveDto.getName(),
                 saveDto.getDescription(),
                 saveDto.getOpenChatAddress(),
                 saveDto.getActiveDate(),
                 saveDto.isOnline(),
                 saveDto.getParticipantMax(),
-                saveDto.getUniv(),
-                category));
-        new UserClub(userDetails.getUsername(), ClubAccessState.LEADER, user, club);
+                saveDto.getUniv());
+
+        club.setCategory(category);
+        clubRepository.save(club);
+
+        UserClub userClub = new UserClub(userDetails.getUsername(), ClubAccessState.LEADER);
+        userClub.setClub(club);
+        userClub.setUser(user);
+
         return club.getId();
     }
 
@@ -105,6 +111,14 @@ public class ClubService {
     }
 
     /**
+     * read order page list
+     */
+    public Page<CategoryDto.ClubListDto> readClubListWithCategory(CategoryDto.ReadReqDto readReqDto) {
+        return categoryRepositoryCustom.searchPage(readReqDto,
+                PageRequest.of(readReqDto.getPage() != null ? readReqDto.getPage() : 0, 10));
+    }
+
+    /**
      * 그룹 신청
      */
     @Transactional
@@ -112,8 +126,10 @@ public class ClubService {
         User user = userRepository.findByLoginId(userDetails.getUsername()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Club club = clubRepository.findById(id).orElseThrow(() -> new CustomException(RESOURCE_NOT_FOUND));
         ClubValidator.checkDuplicateApplicant(user,club);
-        club.apply(new UserClub(userDetails.getUsername(),ClubAccessState.WAITING,user,club));
+        UserClub userClub = new UserClub(userDetails.getUsername(),ClubAccessState.WAITING);
+        userClub.setUser(user);
         club.increaseApplicant(club.getApplicantCount());
+        userClub.setClub(club);
         return club.getId();
     }
 

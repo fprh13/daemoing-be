@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Category {
 
     private String childCategory;
 
-    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Club> clubs = new ArrayList<>();
 
 
@@ -33,8 +34,10 @@ public class Category {
     }
 
     //==업데이트==//
-    public void update(String parentCategory, String childCategory) {
-        this.parentCategory = parentCategory;
-        this.childCategory = childCategory;
+    public void update(String changeParentCategory, String changeChildCategory) {
+        this.parentCategory = changeParentCategory;
+        this.childCategory = changeChildCategory;
     }
+
+
 }

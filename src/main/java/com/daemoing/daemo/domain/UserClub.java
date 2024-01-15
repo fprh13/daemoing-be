@@ -33,13 +33,27 @@ public class UserClub extends BaseTimeEntity {
     @JoinColumn(name = "club_id")
     private Club club;
 
-    public UserClub(String applicant, ClubAccessState clubAccessState, User user, Club club) {
+    public UserClub(String applicant, ClubAccessState clubAccessState) {
         this.applicant = applicant;
         this.clubAccessState = clubAccessState;
-        this.user = user;
-        user.getUserClubs().add(this);
+    }
+
+    //==연관관계 메서드==//
+    public void setClub(Club club) {
         this.club = club;
         club.getUserClubs().add(this);
+    }
+    public void setUser(User user) {
+        this.user = user;
+        user.getUserClubs().add(this);
+    }
+
+    //==그룹 신청==//
+    public void apply(Club club, User user) {
+        this.club = club;
+        club.getUserClubs().add(this);
+        this.user = user;
+        user.getUserClubs().add(this);
     }
 
     //==신청 상태 변경==//
