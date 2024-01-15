@@ -1,6 +1,7 @@
 package com.daemoing.daemo.controller;
 
 import com.daemoing.daemo.controller.response.ResponseDto;
+import com.daemoing.daemo.dto.CategoryDto;
 import com.daemoing.daemo.service.ClubService;
 import com.daemoing.daemo.dto.ClubDto.UpdateDto;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,14 @@ public class ClubController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody SaveDto saveDto, @AuthenticationPrincipal UserDetails userDetails) {
         return ResponseEntity.status(CREATED).body(ResponseDto.success(CREATED,clubService.save(saveDto,userDetails)));
+    }
+
+    /**
+     * read page order
+     */
+    @GetMapping
+    public ResponseEntity<?> pageClub(CategoryDto.ReadReqDto readReqDto) {
+        return ResponseEntity.status(OK).body(ResponseDto.success(OK,clubService.readClubListWithCategory(readReqDto)));
     }
 
     /**

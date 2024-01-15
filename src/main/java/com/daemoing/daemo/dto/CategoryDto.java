@@ -1,5 +1,6 @@
 package com.daemoing.daemo.dto;
 
+import com.daemoing.daemo.domain.Category;
 import com.daemoing.daemo.domain.Univ;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,8 @@ public class CategoryDto {
     public static class UpdateDto {
         private String parentCategory;
         private String childCategory;
+        private String changeParentCategory;
+        private String changeChildCategory;
     }
 
     /**
@@ -90,5 +93,19 @@ public class CategoryDto {
         // 페이지 정렬 조건
         private Integer page; // null 일 수 있으니
         private String order;
+    }
+
+    /**
+     * read category response
+     */
+    @Data
+    public static class ReadResDto {
+        private String parentCategory;
+        private String childCategory;
+
+        public ReadResDto(Category category) {
+            this.parentCategory = category.getParentCategory();
+            this.childCategory = category.getChildCategory();
+        }
     }
 }

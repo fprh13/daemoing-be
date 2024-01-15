@@ -95,7 +95,8 @@ public class CategoryRepositoryCustomImpl implements CategoryRepositoryCustom{
                         parentCategoryEq(readReqDto.getParentCategory()),
                         childCategoryEq(readReqDto.getChildCategory()),
                         isOnlineEq(readReqDto.getIsOnline()),
-                        nameCt(readReqDto.getKeyword())
+                        nameCt(readReqDto.getKeyword()),
+                        club.isNotNull()
                 )
                 .orderBy()
                 .orderBy(getOrderSpecifier(readReqDto.getOrder()))
@@ -110,7 +111,8 @@ public class CategoryRepositoryCustomImpl implements CategoryRepositoryCustom{
                 .where(
                         parentCategoryEq(readReqDto.getParentCategory()),
                         childCategoryEq(readReqDto.getChildCategory()),
-                        nameCt(readReqDto.getKeyword())
+                        nameCt(readReqDto.getKeyword()),
+                        club.isNotNull()
                 );
 
 //        return PageableExecutionUtils.getPage(content, pageable, () -> countQuery.fetchCount());
