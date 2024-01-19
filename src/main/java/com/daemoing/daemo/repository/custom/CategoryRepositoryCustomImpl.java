@@ -98,7 +98,6 @@ public class CategoryRepositoryCustomImpl implements CategoryRepositoryCustom{
                         nameCt(readReqDto.getKeyword()),
                         club.isNotNull()
                 )
-                .orderBy()
                 .orderBy(getOrderSpecifier(readReqDto.getOrder()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
