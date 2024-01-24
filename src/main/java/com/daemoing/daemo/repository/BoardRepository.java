@@ -17,4 +17,8 @@ public interface BoardRepository extends JpaRepository<Board,Long> {
 
     Page<Board> findPageBy(Pageable pageAble);
 
+    @Query("select b from Board b where b.title like %:keyword% ")
+    Page<Board> findPageByTitleLikeKeyword(Pageable pageable, @Param("keyword") String keyword);
+
+
 }
