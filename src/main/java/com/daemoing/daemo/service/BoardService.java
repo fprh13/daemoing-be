@@ -97,4 +97,17 @@ public class BoardService {
                 board.getCreateDate(),
                 board.getLastModifiedDate()));
     }
+
+    public Page<PageDto> search(int id, String keyword) {
+        Page<Board> page = boardRepository
+                .findPageByTitleLikeKeyword(PageRequest.of(id, 10, Sort.by(Sort.Direction.DESC,"createDate")),keyword);
+        return page.map(board -> new PageDto(
+                board.getCreateBy(),
+                board.getModifyBy(),
+                board.getTitle(),
+                board.getViewCount(),
+                board.getCreateDate(),
+                board.getLastModifiedDate()));
+    }
+
 }
