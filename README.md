@@ -63,107 +63,79 @@
 
 ## 📁 프로젝트 구조
 ```
-daemo
-│   │       │               ├── DaemoApplication.class
-│   │       │               ├── controller
-│   │       │               │   ├── AuthController.class
-│   │       │               │   ├── BoardController.class
-│   │       │               │   ├── CategoryController.class
-│   │       │               │   ├── ClubController.class
-│   │       │               │   ├── UserController.class
-│   │       │               │   └── response
-│   │       │               │       ├── ResponseDto$ResponseDtoBuilder.class
-│   │       │               │       └── ResponseDto.class
-│   │       │               ├── domain
-│   │       │               │   ├── Board.class
-│   │       │               │   ├── Category.class
-│   │       │               │   ├── Club.class
-│   │       │               │   ├── QBoard.class
-│   │       │               │   ├── QCategory.class
-│   │       │               │   ├── QClub.class
-│   │       │               │   ├── QUniv.class
-│   │       │               │   ├── QUser.class
-│   │       │               │   ├── QUserClub.class
-│   │       │               │   ├── Univ.class
-│   │       │               │   ├── User.class
-│   │       │               │   ├── UserClub.class
-│   │       │               │   └── type
-│   │       │               │       ├── ClubAccessState.class
-│   │       │               │       ├── Gender.class
-│   │       │               │       └── Role.class
-│   │       │               ├── dto
-│   │       │               │   ├── AuthDto$LoginDto.class
-│   │       │               │   ├── AuthDto$TokenDto.class
-│   │       │               │   ├── AuthDto.class
-│   │       │               │   ├── BoardDto$DetailDto.class
-│   │       │               │   ├── BoardDto$PageDto.class
-│   │       │               │   ├── BoardDto$UpdateDto.class
-│   │       │               │   ├── BoardDto$WriteDto.class
-│   │       │               │   ├── BoardDto.class
-│   │       │               │   ├── CategoryDto$ClubListDto.class
-│   │       │               │   ├── CategoryDto$DeleteDto.class
-│   │       │               │   ├── CategoryDto$ReadReqDto.class
-│   │       │               │   ├── CategoryDto$ReadResDto.class
-│   │       │               │   ├── CategoryDto$SaveDto.class
-│   │       │               │   ├── CategoryDto$UpdateDto.class
-│   │       │               │   ├── CategoryDto.class
-│   │       │               │   ├── ClubDto$ApplicantListDto.class
-│   │       │               │   ├── ClubDto$DetailDto.class
-│   │       │               │   ├── ClubDto$PageResDto.class
-│   │       │               │   ├── ClubDto$SaveDto.class
-│   │       │               │   ├── ClubDto$UpdateDto.class
-│   │       │               │   ├── ClubDto$pageReqDto.class
-│   │       │               │   ├── ClubDto.class
-│   │       │               │   ├── QCategoryDto_ClubListDto.class
-│   │       │               │   ├── UserDto$InfoDto.class
-│   │       │               │   ├── UserDto$JoinDto.class
-│   │       │               │   ├── UserDto$UpdateDto.class
-│   │       │               │   └── UserDto.class
-│   │       │               ├── global
-│   │       │               │   ├── auditing
-│   │       │               │   │   ├── BaseCreateByEntity.class
-│   │       │               │   │   ├── BaseTimeEntity.class
-│   │       │               │   │   ├── QBaseCreateByEntity.class
-│   │       │               │   │   ├── QBaseTimeEntity.class
-│   │       │               │   │   └── UserAuditorAware.class
-│   │       │               │   ├── common
-│   │       │               │   │   ├── CustomErrorResponseDto$CustomErrorResponseDtoBuilder.class
-│   │       │               │   │   ├── CustomErrorResponseDto.class
-│   │       │               │   │   ├── ErrorCode.class
-│   │       │               │   │   └── exception
-│   │       │               │   │       ├── CustomException.class
-│   │       │               │   │       └── CustomExceptionHandler.class
-│   │       │               │   ├── configuration
-│   │       │               │   │   ├── OpenApiConfig.class
-│   │       │               │   │   ├── RedisRepositoryConfig.class
-│   │       │               │   │   └── SecurityConfig.class
-│   │       │               │   └── security
-│   │       │               │       ├── JwtAccessDeniedHandler.class
-│   │       │               │       ├── JwtAuthenticationEntryPoint.class
-│   │       │               │       ├── JwtAuthenticationFilter.class
-│   │       │               │       ├── JwtTokenProvider.class
-│   │       │               │       ├── UserDetailsImpl.class
-│   │       │               │       └── UserDetailsServiceImpl.class
-│   │       │               ├── repository
-│   │       │               │   ├── BoardRepository.class
-│   │       │               │   ├── CategoryRepository.class
-│   │       │               │   ├── ClubRepository.class
-│   │       │               │   ├── UserClubRepository.class
-│   │       │               │   ├── UserRepository.class
-│   │       │               │   ├── custom
-│   │       │               │   │   ├── CategoryRepositoryCustom.class
-│   │       │               │   │   └── CategoryRepositoryCustomImpl.class
-│   │       │               │   └── init
-│   │       │               │       ├── CategoryInitDb$InitService.class
-│   │       │               │       └── CategoryInitDb.class
-│   │       │               └── service
-│   │       │                   ├── AuthService.class
-│   │       │                   ├── BoardService.class
-│   │       │                   ├── CategoryService.class
-│   │       │                   ├── ClubService.class
-│   │       │                   ├── RedisService.class
-│   │       │                   ├── UserService.class
-│   │       │                   └── validator
-│   │       │                       └── ClubValidator.class
+ src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── daemoing
+    │   │           └── daemo
+    │   │               ├── DaemoApplication.java
+    │   │               ├── controller
+    │   │               │   ├── AuthController.java
+    │   │               │   ├── BoardController.java
+    │   │               │   ├── CategoryController.java
+    │   │               │   ├── ClubController.java
+    │   │               │   ├── UserController.java
+    │   │               │   └── response
+    │   │               │       └── ResponseDto.java
+    │   │               ├── domain
+    │   │               │   ├── Board.java
+    │   │               │   ├── Category.java
+    │   │               │   ├── Club.java
+    │   │               │   ├── Univ.java
+    │   │               │   ├── User.java
+    │   │               │   ├── UserClub.java
+    │   │               │   └── type
+    │   │               │       ├── ClubAccessState.java
+    │   │               │       ├── Gender.java
+    │   │               │       └── Role.java
+    │   │               ├── dto
+    │   │               │   ├── AuthDto.java
+    │   │               │   ├── BoardDto.java
+    │   │               │   ├── CategoryDto.java
+    │   │               │   ├── ClubDto.java
+    │   │               │   └── UserDto.java
+    │   │               ├── global
+    │   │               │   ├── auditing
+    │   │               │   │   ├── BaseCreateByEntity.java
+    │   │               │   │   ├── BaseTimeEntity.java
+    │   │               │   │   └── UserAuditorAware.java
+    │   │               │   ├── common
+    │   │               │   │   ├── CustomErrorResponseDto.java
+    │   │               │   │   ├── ErrorCode.java
+    │   │               │   │   └── exception
+    │   │               │   │       ├── CustomException.java
+    │   │               │   │       └── CustomExceptionHandler.java
+    │   │               │   ├── configuration
+    │   │               │   │   ├── OpenApiConfig.java
+    │   │               │   │   ├── RedisRepositoryConfig.java
+    │   │               │   │   └── SecurityConfig.java
+    │   │               │   └── security
+    │   │               │       ├── JwtAccessDeniedHandler.java
+    │   │               │       ├── JwtAuthenticationEntryPoint.java
+    │   │               │       ├── JwtAuthenticationFilter.java
+    │   │               │       ├── JwtTokenProvider.java
+    │   │               │       ├── UserDetailsImpl.java
+    │   │               │       └── UserDetailsServiceImpl.java
+    │   │               ├── repository
+    │   │               │   ├── BoardRepository.java
+    │   │               │   ├── CategoryRepository.java
+    │   │               │   ├── ClubRepository.java
+    │   │               │   ├── UserClubRepository.java
+    │   │               │   ├── UserRepository.java
+    │   │               │   ├── custom
+    │   │               │   │   ├── CategoryRepositoryCustom.java
+    │   │               │   │   └── CategoryRepositoryCustomImpl.java
+    │   │               │   └── init
+    │   │               │       └── CategoryInitDb.java
+    │   │               └── service
+    │   │                   ├── AuthService.java
+    │   │                   ├── BoardService.java
+    │   │                   ├── CategoryService.java
+    │   │                   ├── ClubService.java
+    │   │                   ├── RedisService.java
+    │   │                   ├── UserService.java
+    │   │                   └── validator
+    │   │                       └── ClubValidator.java
 
 ```
